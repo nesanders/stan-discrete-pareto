@@ -1,18 +1,18 @@
 # Implementation of a discrete power law model with variable y_min value in stan
 
-This example code demonstrates sampling from a discrete outcome power law distribution (AKA the [discrete Pareto or  Zipf](https://en.wikipedia.org/wiki/Zipf's_law#Related_laws) distribution) where the minimum value, $y_{\rm{min}}$, is allowed to vary. This is accomplished via calculation of the Hurwitz zeta function using custom external C++ functions.
+This example code demonstrates Bayesian inference with a discrete outcome power law distribution (AKA the [discrete Pareto or  Zipf](https://en.wikipedia.org/wiki/Zipf's_law#Related_laws) distribution) where the minimum value, $y_{\rm{min}}$, is allowed to vary. This is accomplished using [*Stan*](https://mc-stan.org) via calculation of the Hurwitz zeta function using custom external C++ functions.
 
 Credit belongs to [maxbiostat](https://github.com/maxbiostat) for *Stan* and C++ code and R implementation.
 
 Note that the input data format for the *Stan* model is a frequency table (a list of values and a list of counts at each value) rather than raw discrete samples.  The modeling is equivalent, but this input format facilitates the marginalization over discrete parameters necessary for *Stan* (and highly efficient).
 
-# Dependencies
+## Dependencies
 
 The minimal working example implemented in R (zipf_mwe_varying_Ymin.r) and the tests for the Hurwitz zeta implementation in C++ (as called through *Stan*) require *rstan* (v.2.19.3).
 
 The inference test suite and comparison to reference implementations of the Hurwitz zeta in python (discrete_power_law_testing.py) is written for python 3.6 and requires *numpy* (v. 1.17.0), *pystan* (v. 2.19.1.1), *scipy* (v. 1.3.0), *mpmath* (v 1.1.0), and *matplotlib* (v. 3.1.1).
 
-# Limitations
+## Limitations
 
 **Note 1: This approach allows you to perform inference on $\alpha$ (the power law slope), but not $y_{\rm{min}}$ (the power law minimum value).** However, it does allow $y_{\rm{min}}$ to be fixed at an arbitrary value.  Performing inference on $y_{\rm{min}}$ would change the data range covered by the likelihood model at each iteration.  See e.g. work by [Clauset et al.](http://tuvalu.santafe.edu/~aaronc/powerlaws/) for alternate approaches.
 
